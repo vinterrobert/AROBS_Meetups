@@ -6,8 +6,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table (name = "Vote")
-@AllArgsConstructor
+@Table (name = "vote", uniqueConstraints = @UniqueConstraint(columnNames={"id_user", "id_proposal"}))
+@RequiredArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -20,14 +20,16 @@ public class Vote {
     @Column(name = "id_vote")
     private int idVote;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn (name = "id_user", referencedColumnName = "id_user")
     @NotNull
+    @NonNull
     private User user;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn (name = "id_proposal", referencedColumnName = "id_proposal")
     @NotNull
+    @NonNull
     private Proposal proposal;
 
 }

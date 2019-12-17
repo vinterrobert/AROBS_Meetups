@@ -5,12 +5,12 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
-@Table(name = "Achievements_History")
-@AllArgsConstructor
+@Table(name = "achievements_history")
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -22,21 +22,27 @@ public class AchievementsHistory {
     @Column(name = "id_achievement_history")
     private int idEvent;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user", referencedColumnName = "id_user")
+    @NotNull
+    @NonNull
     private User user;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_prize", referencedColumnName = "id_prize")
+    @NotNull
+    @NonNull
     private Prize prize;
 
     @Column(name = "points")
     @NotNull
     @Min(0)
+    @NonNull
     private int points;
 
     @Column(name = "date_time")
     @NotNull
-    private Date dateTime;
+    @NonNull
+    private Timestamp dateTime;
 
 }
